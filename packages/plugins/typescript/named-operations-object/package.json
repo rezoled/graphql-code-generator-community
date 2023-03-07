@@ -38,12 +38,12 @@
     "graphql-tag": "^2.0.0"
   },
   "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
+    "@graphql-codegen/plugin-helpers": "^4.0.0",
     "change-case-all": "1.0.15",
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0"
+    "@graphql-codegen/testing": "2.0.1"
   },
   "publishConfig": {
     "directory": "dist",
