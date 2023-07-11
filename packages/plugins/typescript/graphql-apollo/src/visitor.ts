@@ -71,6 +71,17 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
       operationVariablesTypes,
     });
 
+    // Add watch query operation automatically for each generated query
+    if(operationType === 'Query') {
+      this._operationsToInclude.push({
+        node,
+        documentVariableName,
+        'WatchQuery',
+        operationResultType,
+        operationVariablesTypes,
+      });
+    }
+
     return null;
   }
 
@@ -80,7 +91,7 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
       const optionType = GraphQLApolloVisitor.getApolloOperationOptionType(x.operationType);
       const generics = [x.operationResultType, x.operationVariablesTypes];
 
-      const operationName = x.node.name.value;
+      const operationName = x.operationType === 'WatchQuery' ? `${x.node.name.value}Watch` : x.node.name.value;
       const genericParameter =
         x.operationType !== 'Mutation' ? [...generics].reverse() : [...generics];
       // the reason we're reversing: https://github.com/apollographql/apollo-client/issues/8537
@@ -106,6 +117,7 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
         return 'query';
       case 'Mutation':
         return 'mutation';
+      case 'WatchQuery':
       case 'Query':
         return 'query';
       default:
@@ -120,6 +132,8 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
         return 'mutate';
       case 'Query':
         return 'query';
+      case 'WatchQuery':
+        return 'watchQuery';
       default:
         throw new Error('unknown operation type: ' + operationType);
     }
@@ -132,6 +146,7 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
       case 'Mutation':
         return 'MutationOptions';
       case 'Query':
+      case 'WatchQuery':
         return 'QueryOptions';
       default:
         throw new Error('unknown operation type: ' + operationType);
