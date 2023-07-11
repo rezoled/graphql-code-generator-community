@@ -1,13 +1,12 @@
 import { IntrospectionQuery } from 'graphql';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
+import { offlineExchange } from '@urql/exchange-graphcache';
 import {
   OptimisticMutationResolver as GraphCacheOptimisticMutationResolver,
   Resolver as GraphCacheResolver,
-  StorageAdapter as GraphCacheStorageAdapter,
   UpdateResolver as GraphCacheUpdateResolver,
 } from '@urql/exchange-graphcache';
-import { IntrospectionData } from '@urql/exchange-graphcache/dist/types/ast';
 
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -1245,11 +1244,9 @@ export type GraphCacheUpdaters = {
   };
 };
 
-export type GraphCacheConfig = {
-  schema?: IntrospectionData;
+export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
   updates?: GraphCacheUpdaters;
   keys?: GraphCacheKeysConfig;
   optimistic?: GraphCacheOptimisticUpdaters;
   resolvers?: GraphCacheResolvers;
-  storage?: GraphCacheStorageAdapter;
 };

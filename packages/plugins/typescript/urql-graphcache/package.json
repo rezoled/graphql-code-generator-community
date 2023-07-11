@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-urql-graphcache",
-  "version": "2.4.3",
+  "version": "2.4.5",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating a generic to be used in graphcache cache config",
   "repository": {
@@ -9,6 +9,9 @@
     "directory": "packages/plugins/typescript/urql-graphcache"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
